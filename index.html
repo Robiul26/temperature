@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Weather API</title>
+</head>
+
+<body>
+    <!-- <section> -->
+    <div class="container">
+        <div class="form">
+            <input type="text" class="form-control" id="city-input" placeholder="City name">
+            <button id="search-btn">Search</button>
+        </div>
+        <div class="output-box">
+
+            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id="city-name"></h1>
+            <h2 id="temp-amount"></h2>
+            <h3 id="description"></h3>
+        </div>
+    </div>
+    <!-- </section> -->
+
+    <script>
+        let inputCity = document.getElementById("city-input");
+        let searchBtn = document.getElementById("search-btn");
+        searchBtn.addEventListener("click", function () {
+            fetch("https://api.openweathermap.org/data/2.5/weather?q=" + inputCity.value + "&appid=274850683d348eb016bb417b215ecd84")
+                .then(response => response.json())
+                .then(data => {
+                    let cityName = data.name;
+                    let temp = data.main.temp;
+                    let desc = data.weather[0].description;
+                    document.getElementById("city-name").innerHTML = cityName;
+                    document.getElementById("temp-amount").innerHTML = temp;
+                    document.getElementById("description").innerHTML = desc;
+                })
+                .catch(error => alert("City not found!"));
+
+        });
+
+    </script>
+
+</body>
+
+</html>
